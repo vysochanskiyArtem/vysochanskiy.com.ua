@@ -1,0 +1,151 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.main {
+	display: -webkit-box;
+	display: flex;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.main__external-circle {
+	display: -webkit-box;
+	display: flex;
+	width: 500px;
+	height: 500px;
+	margin: auto;
+	background-color: rgb(250, 250, 250);
+	border-radius: 50%;
+	box-shadow: inset 3px 0px 5px 0px rgba(20, 20, 20, .4);
+	opacity: 1;
+	position: relative;
+	top: 0;
+	transition: top 1.5s,
+				opacity 1s;
+}
+
+.main__external-circle_hidden {
+	opacity: 0;
+	position: relative;
+	top: 100px;
+}
+
+.main__internal-circle {
+	width: 200px;
+	height: 200px;
+	margin: auto;
+	background-color: rgb(255, 255, 255);
+	border-radius: 50%;
+	box-shadow: 3px 0px 5px 0px rgba(20, 20, 20, .4);
+	opacity: 1;
+	position: relative;
+	top: 0;
+	transition: top 1.5s 1s,
+				opacity 1s 1s;
+	overflow: hidden;
+}
+
+.main__internal-circle__eye {
+	width: 20px; height: 20px;
+	background-color: black;
+	border-radius: 50%;
+	position: absolute;
+	top: 75px; right: 30px;
+	border: 1px solid white;
+}
+
+.main__internal-circle__mouth {
+	width: 100px; height: 100px;
+	background-color: black;
+	border-radius: 50%;
+	position: absolute;
+	top: 60px; right: -20px;
+}
+
+.main__internal-circle__mouth_white {
+	width: 100px; height: 100px;
+	background-color: white;
+	border-radius: 50%;
+	position: absolute;
+	top: 55px; right: -16px;
+}
+
+.main__internal-circle_hidden {
+	opacity: 0;
+	position: relative;
+	top: 50px;
+}
+
+.main__internal-circle__heading {
+	position: absolute;
+	left: 50%; top: 40%;
+}
+
+.main__internal-circle__under-heading {
+	position: absolute;
+	left: 50%; top: 48%;
+}
+
+.circle_transitioned {
+	transition: top 1.5s ease-in, opacity 1s ease-in, -webkit-transform .3s;
+	transition: top 1.5s ease-in, opacity 1s ease-in, transform .3s;
+	transition: top 1.5s ease-in, opacity 1s ease-in, transform .3s, -webkit-transform .3s;
+}
+
+.main__assign {
+	width: 300px;
+	margin-top: -30px;
+	position: absolute;
+	left: 25px; top: 50%;
+	cursor: pointer;
+}
+
+.main__assign path {
+	transition: fill 1s;
+}
+
+.main__pointer {
+	width: 20px;
+	height: 20px;
+	margin-left: -10px;
+	position: absolute;
+	bottom: 10px; left: 50%;
+	opacity: 1;
+	transition: bottom 1.5s ease-in,
+							opacity 1.5s ease-in;
+}
+
+.main__pointer_hidden {
+	bottom: 50px;
+	opacity: 0;
+}
+
+.main__pointer__side {
+	width: 20px;
+}
+
+.main__pointer__side_left {
+	border-bottom: 1px solid black;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	-webkit-transform-origin: left bottom;
+	transform-origin: left bottom;
+	position: relative;
+	left: -4px;
+}
+
+.main__pointer__side_right {
+	border-top: 1px solid black;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	-webkit-transform-origin: right top;
+	transform-origin: right top;
+	position: relative;
+	right: -4px;
+}
