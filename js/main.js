@@ -2,10 +2,12 @@
 	var externalCircle = document.querySelector('.main__external-circle'),
 			internalCircle = document.querySelector('.main__internal-circle'),
 			mainContainer = document.querySelector('.main'),
+			navIcon = document.querySelector('.main__nav-icon'),
 			svgSign = document.getElementById('svg-sign'),
 			angle = 0;
 
 	mainContainer.addEventListener('mousemove', manageShadows);
+	navIcon.addEventListener('click', toggleNavIcon);
 	window.onload = appeareCircles;
 
 	// start svg animation
@@ -23,9 +25,19 @@
 
 
 	// functions
+	function showNavIcon() {
+		navIcon.classList.remove('main__nav-icon_hidden');
+	}
+
+	function toggleNavIcon() {
+		navIcon.classList.toggle('main__nav-icon_active');
+	}
+
 	function appeareCircles(event) {
 		externalCircle.classList.remove('main__external-circle_hidden');
 		externalCircle.children[0].classList.remove('main__internal-circle_hidden');
+
+		showNavIcon();
 
 		// var pointer = document.querySelector('.main__pointer');
 		// pointer.classList.remove('main__pointer_hidden');
