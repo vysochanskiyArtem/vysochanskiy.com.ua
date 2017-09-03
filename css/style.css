@@ -5,13 +5,13 @@
 body {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 
 .main {
 	display: -webkit-box;
 	display: flex;
 	height: 100vh;
-	overflow: hidden;
 }
 
 .main__external-circle {
@@ -51,31 +51,6 @@ body {
 	overflow: hidden;
 }
 
-.main__internal-circle__eye {
-	width: 20px; height: 20px;
-	background-color: black;
-	border-radius: 50%;
-	position: absolute;
-	top: 75px; right: 30px;
-	border: 1px solid white;
-}
-
-.main__internal-circle__mouth {
-	width: 100px; height: 100px;
-	background-color: black;
-	border-radius: 50%;
-	position: absolute;
-	top: 60px; right: -20px;
-}
-
-.main__internal-circle__mouth_white {
-	width: 100px; height: 100px;
-	background-color: white;
-	border-radius: 50%;
-	position: absolute;
-	top: 55px; right: -16px;
-}
-
 .main__internal-circle_hidden {
 	opacity: 0;
 	position: relative;
@@ -98,6 +73,8 @@ body {
 	transition: top 1.5s ease-in, opacity 1s ease-in, transform .3s, -webkit-transform .3s;
 }
 
+/*assign*/
+/**********************/
 .main__assign {
 	width: 300px;
 	margin-top: -30px;
@@ -108,46 +85,6 @@ body {
 
 .main__assign path {
 	transition: fill 1s;
-}
-
-.main__pointer {
-	width: 20px;
-	height: 20px;
-	margin-left: -10px;
-	position: absolute;
-	bottom: 10px; left: 50%;
-	opacity: 1;
-	transition: bottom 1.5s ease-in,
-							opacity 1.5s ease-in;
-}
-
-.main__pointer_hidden {
-	bottom: 50px;
-	opacity: 0;
-}
-
-.main__pointer__side {
-	width: 20px;
-}
-
-.main__pointer__side_left {
-	border-bottom: 1px solid black;
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
-	-webkit-transform-origin: left bottom;
-	transform-origin: left bottom;
-	position: relative;
-	left: -4px;
-}
-
-.main__pointer__side_right {
-	border-top: 1px solid black;
-	-webkit-transform: rotate(-45deg);
-	transform: rotate(-45deg);
-	-webkit-transform-origin: right top;
-	transform-origin: right top;
-	position: relative;
-	right: -4px;
 }
 
 /*navigation*/
@@ -173,8 +110,9 @@ body {
 }
 
 .main__nav-icon_active {
-	top: 25px;
 	border: 10px solid transparent;
+	top: 25px;
+	z-index: 20;
 }
 
 .main__nav-icon_active .main__nav-icon__line {
@@ -228,7 +166,6 @@ body {
 	border-bottom: 2px solid black;
 	position: absolute;
 	top: 0; right: 0;
-	transition: width .2s;
 }
 
 .main__nav-icon__line_hover-medium {
@@ -236,7 +173,6 @@ body {
 	border-bottom: 2px solid black;
 	position: absolute;
 	top: 11px; right: 0;
-	transition: width .2s;
 }
 
 .main__nav-icon__line_hover-short {
@@ -244,23 +180,87 @@ body {
 	border-bottom: 2px solid black;
 	position: absolute;
 	top: 22px; right: 0;
-	transition: width .2s;
 }
 
 .main__nav-icon:hover .main__nav-icon__line_hover-long {
 	width: 50px;
+	transition: width .2s;
 }
 
 .main__nav-icon:hover .main__nav-icon__line_hover-medium {
 	width: 40px;
+	transition: width .2s;
 }
 
 .main__nav-icon:hover .main__nav-icon__line_hover-short {
 	width: 30px;
+	transition: width .2s;
 }
 
 .main__nav-icon_active .main__nav-icon__line_hover-long,
 .main__nav-icon_active .main__nav-icon__line_hover-medium,
 .main__nav-icon_active .main__nav-icon__line_hover-short {
 	display: none;
+}
+
+/*navigation list*/
+/**********************/
+.main__nav-list {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(255, 255, 255, .9);
+	position: absolute;
+	right: 0; top: 0;
+	z-index: 10;
+	transition: right .7s cubic-bezier(.49,.12,.55,.99);
+}
+
+.main__nav-list_hidden {
+	right: -100%;
+}
+
+.nav-list {
+	margin: auto;
+	padding-left: 0;
+	list-style-type: none;
+}
+
+.nav-list__item {
+	margin-bottom: 35px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 900;
+	font-size: 92px;
+}
+
+.nav-list__item__link {
+	display: inline-block;
+	padding-bottom: 25px;
+	color: black;
+	text-decoration: none;
+	opacity: 0;
+	position: relative;
+	left: 150px;
+}
+
+.nav-list__item__link_transitioned {
+	opacity: 1;
+	left: 0;
+}
+
+.nav-list__item__link_gray {
+	color: silver;
+}
+
+.nav-list__item__underline {
+	display: inline-block;
+	width: 0;
+	border-bottom: 15px solid black;
+	position: absolute;
+	left: 0; bottom: 0;
+	transition: width .4s cubic-bezier(.49,.12,.55,.99);
+}
+
+.nav-list__item__link:hover .nav-list__item__underline {
+	width: 100%;
 }

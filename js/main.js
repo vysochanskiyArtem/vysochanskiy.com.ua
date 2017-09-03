@@ -3,11 +3,16 @@
 			internalCircle = document.querySelector('.main__internal-circle'),
 			mainContainer = document.querySelector('.main'),
 			navIcon = document.querySelector('.main__nav-icon'),
+			navList = document.querySelector('.main__nav-list'),
+			navLinks = document.querySelectorAll('.nav-list__item__link'),
 			svgSign = document.getElementById('svg-sign'),
-			angle = 0;
+			angle = 0,
+			transitionTime = 0.3;
 
+	// events listeners
 	mainContainer.addEventListener('mousemove', manageShadows);
 	navIcon.addEventListener('click', toggleNavIcon);
+	navList.addEventListener('mouseover', hoverNavLink);
 	window.onload = appeareCircles;
 
 	// start svg animation
@@ -25,12 +30,50 @@
 
 
 	// functions
+	function resetTransitionTime() {
+		transitionTime = 0.3;
+	}
+
+	function showNavLinks() {
+		for(var i = 0; i < navLinks.length; i++) {
+			navLinks[i].classList.toggle('nav-list__item__link_transitioned');
+			navLinks[i].style.transition = 'color .2s ease-in, opacity ' + transitionTime + 's ease-in .7s, left ' + transitionTime + 's ease-in .7s';
+			transitionTime += 0.3;
+		}
+
+		if(i == navLinks.length) {
+			resetTransitionTime();
+		}
+	}
+
+	function hoverNavLink(event) {
+		var target = event.target;
+
+		for(var i = 0; i < navLinks.length; i++) {
+			if(navLinks[i] === target) {
+				navLinks[i].classList.remove('nav-list__item__link_gray');
+			} else {
+				navLinks[i].classList.add('nav-list__item__link_gray');
+			}
+
+			if(target.tagName != 'A') {
+				navLinks[i].classList.remove('nav-list__item__link_gray');
+			}
+		}
+	}
+
+	function toggleNavList() {
+		navList.classList.toggle('main__nav-list_hidden');
+	}
+
 	function showNavIcon() {
 		navIcon.classList.remove('main__nav-icon_hidden');
 	}
 
 	function toggleNavIcon() {
 		navIcon.classList.toggle('main__nav-icon_active');
+		toggleNavList();
+		showNavLinks();
 	}
 
 	function appeareCircles(event) {
