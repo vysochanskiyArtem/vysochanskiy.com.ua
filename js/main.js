@@ -1,19 +1,31 @@
 ;(function() {
 	var externalCircle = document.querySelector('.main__external-circle'),
-			internalCircle = document.querySelector('.main__internal-circle'),
-			mainContainer = document.querySelector('.main'),
-			navIcon = document.querySelector('.main__nav-icon'),
-			navList = document.querySelector('.main__nav-list'),
-			navLinks = document.querySelectorAll('.nav-list__item__link'),
-			svgSign = document.getElementById('svg-sign'),
-			angle = 0,
-			transitionTime = 0.3;
+		internalCircle = document.querySelector('.main__internal-circle'),
+		mainContainer = document.querySelector('.main'),
+		navIcon = document.querySelector('.main__nav-icon'),
+		navList = document.querySelector('.main__nav-list'),
+		navLinks = document.querySelectorAll('.nav-list__item__link'),
+		svgSign = document.getElementById('svg-sign'),
+		contentContainer = document.querySelector('.content'),
+		angle = 0,
+		duration = 0.3,
+		indexPageTitle = 'Vysochanskiy Artem';
 
 	// events listeners
-	mainContainer.addEventListener('mousemove', manageShadows);
+	if(document.title == indexPageTitle) {
+		mainContainer.addEventListener('mousemove', manageShadows);
+		window.addEventListener('load', appeareCircles);
+	} else {
+		window.addEventListener('load', showContent);
+		window.addEventListener('load', showNavIcon);
+	}
+
 	navIcon.addEventListener('click', toggleNavIcon);
 	navList.addEventListener('mouseover', hoverNavLink);
-	window.onload = appeareCircles;
+
+	for(var i = 0; i < navLinks.length; i++) {
+		navLinks[i].addEventListener('click', changePage);
+	}
 
 	// start svg animation
 	var vivus = new Vivus('svg-sign', {duration: 100}, function() {
@@ -30,19 +42,77 @@
 
 
 	// functions
-	function resetTransitionTime() {
-		transitionTime = 0.3;
+	function showContent() {
+		setTimeout(function() {
+			contentContainer.classList.add('content_shown');
+		}, 1000);
+	}
+
+	function changeUrl(link) {
+		var ndx = link.href.lastIndexOf('/'),
+			pageName = '';
+
+		if(ndx != -1) {
+			pageName = link.href.slice(ndx+1);
+		} else {
+			pageName = link.href;
+		}
+
+		history.pushState({}, '', pageName);
+	}
+
+	function clearExcessListeners() {
+		mainContainer.removeEventListener('mousemove', manageShadows);
+		window.onload = showNavIcon;
+	}
+
+	function clearPlaceForContent() {
+		toggleNavIcon();
+		externalCircle.classList.add('main__external-circle_hidden');
+
+		setTimeout(function() {
+			externalCircle.style.display = 'none';
+		}, 1000);
+
+		svgSign.classList.add('main__assign_header');
+		navIcon.classList.add('main__nav-icon_header');
+	}
+
+	function changePage(event) {
+		event.preventDefault();
+		clearPlaceForContent();
+		clearExcessListeners();
+
+		var xhr = new XMLHttpRequest(),
+			self = this,
+			url = self.href;
+
+		xhr.onload = function() {
+			setTimeout(function() {
+				contentContainer.innerHTML = xhr.responseText;
+			}, 1000);
+
+			showContent();
+			document.title = self.title;
+			changeUrl(self);
+		};
+		xhr.open('POST', url, true);
+        xhr.send();
+	}
+
+	function resetDuration() {
+		duration = 0.3;
 	}
 
 	function showNavLinks() {
 		for(var i = 0; i < navLinks.length; i++) {
 			navLinks[i].classList.toggle('nav-list__item__link_transitioned');
-			navLinks[i].style.transition = 'color .2s ease-in, opacity ' + transitionTime + 's ease-in .7s, left ' + transitionTime + 's ease-in .7s';
-			transitionTime += 0.3;
+			navLinks[i].style.transition = 'color .2s ease-in, opacity ' + duration + 's ease-in .7s, left ' + duration + 's ease-in .7s';
+			duration += 0.3;
 		}
 
 		if(i == navLinks.length) {
-			resetTransitionTime();
+			resetDuration();
 		}
 	}
 
@@ -81,9 +151,6 @@
 		externalCircle.children[0].classList.remove('main__internal-circle_hidden');
 
 		showNavIcon();
-
-		// var pointer = document.querySelector('.main__pointer');
-		// pointer.classList.remove('main__pointer_hidden');
 	}
 
 	function manageShadows(event) {

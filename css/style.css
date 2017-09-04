@@ -81,6 +81,8 @@ body {
 	position: absolute;
 	left: 25px; top: 50%;
 	cursor: pointer;
+	transition: width .5s ease-in .5s,
+				top .5s ease-in .5s;
 }
 
 .main__assign path {
@@ -230,7 +232,11 @@ body {
 	margin-bottom: 35px;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 900;
-	font-size: 92px;
+	font-size: 72px;
+}
+
+.nav-list__item:last-child {
+	margin-bottom: 0;
 }
 
 .nav-list__item__link {
@@ -263,4 +269,38 @@ body {
 
 .nav-list__item__link:hover .nav-list__item__underline {
 	width: 100%;
+}
+
+/*about page*/
+/**********************/
+.main__assign_header {
+	width: 200px;
+	top: 50px;
+}
+
+.main__nav-icon_header {
+	top: 30px;
+	transition: top .5s ease-in .5s;
+}
+
+.content {
+	max-width: 50%;
+	padding-left: 25px;
+	padding-top: 150px;
+	font-family: 'Josefin Slab', serif;
+	line-height: 1.6;
+	opacity: 0;
+	transition: opacity .5s ease-in;
+}
+
+.content_shown {
+	opacity: 1;
+}
+
+.content__heading {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.content__paragraph {
+	font-size: 18px;
 }
