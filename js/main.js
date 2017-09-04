@@ -27,6 +27,11 @@
 		navLinks[i].addEventListener('click', changePage);
 	}
 
+	// listening history navigation
+	window.onpopstate = function() {
+		console.log(location.pathname);
+	};
+
 	// start svg animation
 	var vivus = new Vivus('svg-sign', {duration: 100}, function() {
 		var paths = svgSign.children;
