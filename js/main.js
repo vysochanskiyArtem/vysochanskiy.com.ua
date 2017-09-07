@@ -30,9 +30,7 @@
 	}
 
 	// listening history navigation
-	window.onpopstate = function() {
-		console.log(location.pathname);
-	};
+	window.onpopstate = manageBrowserHistory;
 
 	// start svg animation
 	var vivus = new Vivus('svg-sign', {duration: 100}, function() {
@@ -49,6 +47,40 @@
 
 
 	// functions
+	function manageBrowserHistory() {
+		if(location.pathname != '/') {
+			var url = 'short_pages' + location.pathname;
+		} else {
+			var url = location.pathname;
+		}
+
+		clearPlaceForContent();
+		hideContent();
+
+		var xhr = new XMLHttpRequest();
+
+		if(url == '/') {
+			changePageOnIndex();
+			setTimeout(appeareCircles, 10);
+
+			return;
+		}
+
+		xhr.onload = function() {
+			setTimeout(function() {
+				contentContainer.innerHTML = xhr.responseText;
+				setListenerOnWorksItem();
+				clearExcessListeners();
+			}, 1000);
+
+			showContent();
+			document.title = history.state.title;
+		};
+
+		xhr.open('POST', url, true);
+        xhr.send();
+	}
+
 	function hideContent() {
 		contentContainer.classList.remove('content_shown');
 		contentContainer.hidden = true;
@@ -99,7 +131,7 @@
 			pageName = '/';
 		}
 
-		history.pushState({}, '', pageName);
+		history.pushState({title: document.title}, '', pageName);
 	}
 
 	function clearExcessListeners() {
@@ -108,7 +140,6 @@
 	}
 
 	function clearPlaceForContent() {
-		toggleNavIcon();
 		externalCircle.classList.add('main__external-circle_hidden');
 		externalCircle.children[0].classList.add('main__internal-circle_hidden');
 
@@ -127,11 +158,14 @@
 
 		svgSign.classList.remove('main__assign_header');
 		navIcon.classList.remove('main__nav-icon_header');
+
+		document.title = indexPageTitle;
 	}
 
 	function changePage(event) {
 		event.preventDefault();
 		clearPlaceForContent();
+		toggleNavIcon();
 		hideContent();
 
 		var xhr = new XMLHttpRequest(),
@@ -157,6 +191,7 @@
 			document.title = self.title;
 			changeUrl(self);
 		};
+
 		xhr.open('POST', url, true);
         xhr.send();
 	}

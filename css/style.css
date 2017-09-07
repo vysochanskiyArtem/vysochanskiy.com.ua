@@ -81,8 +81,8 @@ body {
 	position: absolute;
 	left: 25px; top: 50%;
 	cursor: pointer;
-	transition: width .5s ease-in .5s,
-				top .5s ease-in .5s;
+	transition: width .5s ease-in,
+				top .5s ease-in;
 }
 
 .main__assign path {
@@ -96,7 +96,7 @@ body {
 	position: absolute;
 	top: 50%; right: 25px;
 	cursor: pointer;
-	transition: top .3s ease-in;
+	transition: top .5s ease-in;
 }
 
 .main__nav-icon_hidden .main__nav-icon__line {
