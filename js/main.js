@@ -9,7 +9,8 @@
 		contentContainer = document.querySelector('.content'),
 		angle = 0,
 		duration = 0.3,
-		indexPageTitle = 'Vysochanskiy Artem';
+		indexPageTitle = 'Vysochanskiy Artem',
+		timerId;
 
 	// events listeners
 	if(document.title == indexPageTitle) {
@@ -105,13 +106,23 @@
 	function clearPlaceForContent() {
 		toggleNavIcon();
 		externalCircle.classList.add('main__external-circle_hidden');
+		externalCircle.children[0].classList.add('main__internal-circle_hidden');
 
-		setTimeout(function() {
+		timerId = setTimeout(function() {
 			externalCircle.style.display = 'none';
 		}, 1000);
 
 		svgSign.classList.add('main__assign_header');
 		navIcon.classList.add('main__nav-icon_header');
+	}
+
+	function changePageOnIndex() {
+		clearTimeout(timerId);
+		externalCircle.style.display = '';
+		mainContainer.addEventListener('mousemove', manageShadows);
+
+		svgSign.classList.remove('main__assign_header');
+		navIcon.classList.remove('main__nav-icon_header');
 	}
 
 	function changePage(event) {
@@ -122,6 +133,13 @@
 		var xhr = new XMLHttpRequest(),
 			self = this,
 			url = self.href;
+
+		if(self.pathname == '/index.html') {
+			changePageOnIndex();
+			setTimeout(appeareCircles, 10);
+
+			return;
+		}
 
 		xhr.onload = function() {
 			setTimeout(function() {
