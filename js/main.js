@@ -86,13 +86,17 @@
 	}
 
 	function changeUrl(link) {
-		var ndx = link.href.lastIndexOf('/'),
+		var ndx = link.pathname.lastIndexOf('/'),
 			pageName = '';
 
 		if(ndx != -1) {
-			pageName = link.href.slice(ndx+1);
+			pageName = link.pathname.slice(ndx+1);
 		} else {
-			pageName = link.href;
+			pageName = link.pathname;
+		}
+
+		if(pageName == '') {
+			pageName = '/';
 		}
 
 		history.pushState({}, '', pageName);
@@ -134,8 +138,9 @@
 			self = this,
 			url = self.href;
 
-		if(self.pathname == '/index.html') {
+		if(self.pathname == '/') {
 			changePageOnIndex();
+			changeUrl(self);
 			setTimeout(appeareCircles, 10);
 
 			return;
