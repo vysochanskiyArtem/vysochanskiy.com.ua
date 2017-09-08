@@ -20,6 +20,7 @@
 		window.addEventListener('load', showContent);
 		window.addEventListener('load', showNavIcon);
 		window.addEventListener('load', setListenerOnWorksItem);
+		sendFormData();
 	}
 
 	navIcon.addEventListener('click', toggleNavIcon);
@@ -47,6 +48,37 @@
 
 
 	// functions
+	function sendFormData() {
+		var form = document.querySelector('.content__form'),
+			successIcon = document.querySelector('.content__form__success'),
+			formData = '';
+		if(!form) return;
+
+		form.onsubmit = function(event) {
+			event.preventDefault();
+			if(!form.reportValidity()) return;
+
+			formData = form.name.name + '=' + form.name.value + '&' + form.email.name + '=' + form.email.value + '&' + form.message.name + '=' + form.message.value;
+
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				form.reset();
+
+				form.submit.value = 'Submitted';
+				form.submit.classList.add('content__form__submit_success');
+				successIcon.classList.add('content__form__success_shown');
+				setTimeout(function() {
+					form.submit.value = 'Submit';
+					form.submit.classList.remove('content__form__submit_success');
+					successIcon.classList.remove('content__form__success_shown');
+				}, 4000);
+			};
+			xhr.open('POST', form.action, true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send(formData);
+		};
+	}
+
 	function manageBrowserHistory() {
 		if(location.pathname != '/') {
 			var url = 'short_pages' + location.pathname;
@@ -71,6 +103,7 @@
 				contentContainer.innerHTML = xhr.responseText;
 				setListenerOnWorksItem();
 				clearExcessListeners();
+				sendFormData();
 			}, 1000);
 
 			showContent();
@@ -185,6 +218,7 @@
 				contentContainer.innerHTML = xhr.responseText;
 				setListenerOnWorksItem();
 				clearExcessListeners();
+				sendFormData();
 			}, 1000);
 
 			showContent();

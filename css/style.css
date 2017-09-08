@@ -386,12 +386,12 @@ body {
 }
 
 .content__form__textarea {
+	display: block;
 	height: 150px;
 	margin-bottom: 10px;
 }
 
 .content__form__submit {
-	display: block;
 	padding: 10px 20px;
 	font-family: 'Josefin Slab', serif;
 	color: white;
@@ -399,6 +399,24 @@ body {
 	background-color: black;
 	border: none;
 	cursor: pointer;
+	transition: padding .5s ease-in;
+}
+
+.content__form__submit_success {
+	padding: 10px 40px 10px 20px;
+}
+
+.content__form__success {
+	color: white;
+	font-size: 16px;
+	opacity: 0;
+	position: relative;
+	left: -27px;
+	transition: opacity .5s ease-in;
+}
+
+.content__form__success_shown {
+	opacity: 1;
 }
 
 .content__form__input:focus,
