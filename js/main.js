@@ -94,6 +94,7 @@
 		if(url == '/') {
 			changePageOnIndex();
 			setTimeout(appeareCircles, 10);
+			responseSvgSign();
 
 			return;
 		}
@@ -108,10 +109,11 @@
 
 			showContent();
 			document.title = history.state.title;
+			responseSvgSign();
 		};
 
 		xhr.open('POST', url, true);
-        xhr.send();
+    xhr.send();
 	}
 
 	function hideContent() {
@@ -209,6 +211,7 @@
 			changePageOnIndex();
 			changeUrl(self);
 			setTimeout(appeareCircles, 10);
+			responseSvgSign();
 
 			return;
 		}
@@ -224,10 +227,11 @@
 			showContent();
 			document.title = self.title;
 			changeUrl(self);
+			responseSvgSign();
 		};
 
 		xhr.open('POST', url, true);
-        xhr.send();
+    xhr.send();
 	}
 
 	function resetDuration() {
@@ -274,6 +278,23 @@
 		navIcon.classList.toggle('main__nav-icon_active');
 		toggleNavList();
 		showNavLinks();
+		toggleOverflow();
+	}
+
+	function responseSvgSign() {
+		if(mainContainer.clientWidth < 769 && document.title !== indexPageTitle) {
+			svgSign.classList.add('main__assign_top');
+		} else {
+			svgSign.classList.remove('main__assign_top');
+		}
+	}
+
+	function toggleOverflow() {
+		var body = document.body;
+
+		if(mainContainer.clientWidth < 769) {
+			body.classList.toggle('prevent-overflow');
+		}
 	}
 
 	function appeareCircles(event) {
